@@ -1,8 +1,10 @@
 package ua.nure.barkovskaya.practice2;
 
 
-import java.util.*;
-import java.util.function.Consumer;
+import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class MyListImpl implements MyList, ListIterable {
     private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
@@ -70,6 +72,21 @@ public class MyListImpl implements MyList, ListIterable {
             elementData[i] = null;
 
         size = 0;
+    }
+
+    private Object remove(int index) {
+        rangeCheck(index);
+
+        modCount++;
+        Object oldValue = elementData(index);
+
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index,
+                    numMoved);
+        elementData[--size] = null; // clear to let GC do its work
+
+        return oldValue;
     }
 
     public boolean remove(Object o) {
@@ -195,15 +212,11 @@ public class MyListImpl implements MyList, ListIterable {
         int lastRet = -1; // index of last element returned; -1 if no such
         int expectedModCount = modCount;
 
-        IteratorImpl() {
-        }
-
         public boolean hasNext() {
             return cursor != size;
         }
 
         public Object next() {
-//            checkForComodification();
             int i = cursor;
             if (i >= size)
                 throw new NoSuchElementException();
@@ -214,35 +227,9 @@ public class MyListImpl implements MyList, ListIterable {
             return elementData[lastRet = i];
         }
 
-        public void forEachRemaining(Consumer<? super Object> consumer) {
-            Objects.requireNonNull(consumer);
-            final int size = MyListImpl.this.size;
-            int i = cursor;
-            if (i >= size) {
-                return;
-            }
-            final Object[] elementData = MyListImpl.this.elementData;
-            if (i >= elementData.length) {
-                throw new ConcurrentModificationException();
-            }
-            while (i != size && modCount == expectedModCount) {
-                consumer.accept(elementData[i++]);
-            }
-            // update once at end of iteration to reduce heap write traffic
-            cursor = i;
-            lastRet = i - 1;
-            checkForComodification();
-        }
-
-        final void checkForComodification() {
-            if (modCount != expectedModCount)
-                throw new ConcurrentModificationException();
-        }
-
         public void remove() {
             if (lastRet < 0)
                 throw new IllegalStateException();
-            checkForComodification();
 
             try {
                 MyListImpl.this.remove(lastRet);
@@ -258,8 +245,6 @@ public class MyListImpl implements MyList, ListIterable {
     public class ListIteratorImpl extends IteratorImpl implements ListIterator {
         // returns true if this list iterator has more elements when traversing
         // ​the list in the reverse direction
-        ListIteratorImpl() {
-        }
 
         public boolean hasPrevious() {
             // returns the previous element in the list and moves the cursor
@@ -270,7 +255,6 @@ public class MyListImpl implements MyList, ListIterable {
         public Object previous() {
             // replaces the last element returned by next or previous with
             // ​the specified element
-            checkForComodification();
             int i = cursor - 1;
             if (i < 0)
                 throw new NoSuchElementException();
@@ -284,7 +268,6 @@ public class MyListImpl implements MyList, ListIterable {
         public void set(Object e) {
             if (lastRet < 0)
                 throw new IllegalStateException();
-            checkForComodification();
 
             try {
                 MyListImpl.this.set(lastRet, e);
