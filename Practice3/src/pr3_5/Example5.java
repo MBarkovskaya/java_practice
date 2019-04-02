@@ -6,16 +6,16 @@ import java.util.TreeSet;
 public class Example5{
 
     public static void main(String[] args) {
-        Example5 example5 = new Example5();
-        HashSet<Student> studentsInfo = example5.studentsInfoCreation();
-        Student student = new Student("Fedor", "Ivanov", "A", 11);
-        boolean containsTrue = studentsInfo.contains(student);
-        studentsInfo.remove(student);
-        boolean containsFalse = studentsInfo.contains(student);
-        System.out.println("containsTrue is " + containsTrue + ", containsFalse is " + containsFalse);
-        System.out.println("=================");
+//        Example5 example5 = new Example5();
+//        HashSet<Student> studentsInfo = example5.studentsInfoCreation();
+//        Student student = new Student("Fedor", "Ivanov", "A", 11);
+//        boolean containsTrue = studentsInfo.contains(student);
+//        studentsInfo.remove(student);
+//        boolean containsFalse = studentsInfo.contains(student);
+//        System.out.println("containsTrue is " + containsTrue + ", containsFalse is " + containsFalse);
+//        System.out.println("=================");
 
-        TreeSet<Student> students = example5.studentsSetCreation();
+//        TreeSet<Student> students = example5.studentsSetCreation();
 //        Collections.sort();
     }
 
