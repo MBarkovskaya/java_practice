@@ -26,10 +26,15 @@ public class Example3_1 {
 
         User testUser = new User("Name", "Nickname", 14);
         boolean result1 = list1.contains(testUser);
-        list1.remove(testUser);
+        System.out.println("List1 contains testUser so the result1 is: " + result1);
+        boolean remove1 = list1.remove(testUser);
+        boolean result1AfterRemoving = list1.contains(testUser);
+        System.out.println("testUser was removed from the List1 so the result1AfterRemoving is: " + result1AfterRemoving);
         boolean result2 = list2.contains(testUser);
+        System.out.println("List2 contains testUser so the result1 is: " + result2);
         list2.remove(testUser);
-
+        boolean result2AfterRemoving = list2.contains(testUser);
+        System.out.println("testUser was removed from the List2 so the result2AfterRemoving is: " + result2AfterRemoving);
         compareArrayLists(list1, list2);
     }
 
