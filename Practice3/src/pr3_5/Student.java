@@ -1,6 +1,5 @@
 package pr3_5;
 
-import java.util.Objects;
 
 public class Student implements Comparable<Student> {
     private String firstName;
@@ -9,26 +8,32 @@ public class Student implements Comparable<Student> {
     private int groupNumber;
 
     public Student(String firstName, String lastName, String groupName, int groupNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.groupName = groupName;
+        this.groupNumber = groupNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return groupNumber == student.groupNumber &&
-                firstName.equals(student.firstName) &&
-                lastName.equals(student.lastName) &&
-                groupName.equals(student.groupName);
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, groupName, groupNumber);
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public int getGroupNumber() {
+        return groupNumber;
     }
 
     @Override
     public int compareTo(Student student) {
-        return this.lastName.compareTo(student.lastName) ;
+        return this.lastName.compareTo(student.lastName);
     }
+
 }
