@@ -1,83 +1,81 @@
 package pr4_1;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Converting {
-    public static void convert1(String fileName) {
-
-        List<String> lines = Collections.emptyList();
+    public static void convert1(List<String> lines) {
         List<String> convertingLines = new ArrayList<>();
-        String result = "";
-        try {
-            lines =
-                    Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-            for (int i = 0; i < 5; i++) {
-                Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);([\\wа-я]+)@([\\wа-я]+\\.[\\w]+)");
-                Matcher matcher = pattern.matcher(lines.get(i));
-                if (matcher.matches()) {
-                    result = matcher.group(1) + "==>" + matcher.group(4) + "@" + matcher.group(5);
-                }
-                convertingLines.add(result);
+        for (int i = 0; i < lines.size(); i++) {
+            String result = "";
+            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);(\\w+@\\w+\\.\\w+)");
+            Matcher matcher = pattern.matcher(lines.get(i));
+            if (matcher.matches()) {
+                result = matcher.group(1) + "==>" + matcher.group(4);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            convertingLines.add(result);
         }
-        for (String convertingLine : convertingLines) {
-            System.out.println(convertingLine);
+        printLines(convertingLines);
+    }
+
+    public static void convert2(List<String> lines) {
+        List<String> convertingLines = new ArrayList<>();
+        for (int i = 0; i < lines.size(); i++) {
+            String result = "";
+            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);(\\w+@\\w+\\.\\w+)");
+            Matcher matcher = pattern.matcher(lines.get(i));
+            if (matcher.matches()) {
+                result = matcher.group(3) + " " + matcher.group(2) + " (email: " + matcher.group(4) + ")";
+            }
+            convertingLines.add(result);
+        }
+        printLines(convertingLines);
+    }
+
+    private static void printLines(List<String> lines) {
+        for (String line : lines) {
+            System.out.println(line);
         }
     }
 
-    public static void convert2(String fileName) {
-        List<String> lines = Collections.emptyList();
-        List<String> convertingLines = new ArrayList<>();
-        String result = "";
-        try {
-            lines =
-                    Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-            for (int i = 0; i < 5; i++) {
-                Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);(\\w+@\\w+\\.\\w+)");
-                Matcher matcher = pattern.matcher(lines.get(i));
+    public static void convert3(List<UserInfo> userInfos) {
+        for (UserInfo userInfo : userInfos) {
+            if (userInfo.getUserInfoMap().containsKey("mail.ru")) {
+                String string = userInfo.getUserInfoMap().get("mail.ru").toString();
+                Pattern pattern = Pattern.compile("(\\w+)@(\\w+\\.\\w+)");
+                Matcher matcher = pattern.matcher(string);
                 if (matcher.matches()) {
-                    result = matcher.group(3) + " " + matcher.group(2) + " (email: " + matcher.group(3) + matcher.group(4) + ")";
+                    System.out.println(matcher.group(2) + "==>" + userInfo.getSurmame());
                 }
-                convertingLines.add(result);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (String convertingLine : convertingLines) {
-            System.out.println(convertingLine);
-        }
-    }
-
-    public static void convert3(String fileName) {
-        List<String> lines = Collections.emptyList();
-        List<String> convertingLines = new ArrayList<>();
-        String result = "";
-        try {
-            lines =
-                    Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-            for (int i = 0; i < 5; i++) {
-                Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);(([\\wа-яА-Я]+) ?([\\wа-яА-Я]+)?);([\\wа-яА-Я]+)?(\\w+@\\w+\\.\\w+)?");
-                Matcher matcher = pattern.matcher(lines.get(i));
-                if (matcher.matches()) {
-                    result = matcher.group(1) + ";" + matcher.group(2) + matcher.group(3) + matcher.group(4) + ")";
+            if (userInfo.getUserInfoMap().containsKey("google.com")) {
+                String string1 = userInfo.getUserInfoMap().get("google.com").toString();
+                Pattern pattern1 = Pattern.compile("(\\w+)@(\\w+\\.\\w+)");
+                Matcher matcher1 = pattern1.matcher(string1);
+                if (matcher1.matches()) {
+                    System.out.println(matcher1.group(2) + "==>" + userInfo.getSurmame());
                 }
-                convertingLines.add(result);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (String convertingLine : convertingLines) {
-            System.out.println(convertingLine);
         }
     }
 }
+
+//    public static void convert4(List<String> lines) {
+//        List<String> convertingLines = new ArrayList<>();
+//        int counter = lines.size();
+//        String result = "";
+//        for (int i = 0; i < counter; i++) {
+//            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);(([\\wа-яА-Я]+) ?([\\wа-яА-Я]+)?);([\\wа-яА-Я]+)?(\\w+@\\w+\\.\\w+)?");
+//            Matcher matcher = pattern.matcher(lines.get(i));
+//            if (matcher.matches()) {
+//                result = matcher.group(1) + ";" + matcher.group(2) + matcher.group(3) + matcher.group(4) + ")";
+//            }
+//            convertingLines.add(result);
+//        }
+//        for (String convertingLine : convertingLines) {
+//            System.out.println(convertingLine);
+//        }
+//    }
+
