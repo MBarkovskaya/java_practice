@@ -1,7 +1,6 @@
 package pr4_1;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,7 +9,7 @@ public class Converting {
         List<String> convertingLines = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             String result = "";
-            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);(\\w+@\\w+\\.\\w+)");
+            Pattern pattern = Pattern.compile("(?iU)(\\w+);(\\w+) (\\w+);(\\w+@\\w+\\.\\w+)");
             Matcher matcher = pattern.matcher(lines.get(i));
             if (matcher.matches()) {
                 result = matcher.group(1) + "==>" + matcher.group(4);
@@ -18,13 +17,14 @@ public class Converting {
             convertingLines.add(result);
         }
         printLines(convertingLines);
+        System.out.println("===============");
     }
 
     public static void convert2(List<String> lines) {
         List<String> convertingLines = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             String result = "";
-            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);([\\wа-яА-Я]+) ([\\wа-яА-Я]+);(\\w+@\\w+\\.\\w+)");
+            Pattern pattern = Pattern.compile("(?iU)(\\w+);(\\w+) (\\w+);(\\w+@\\w+\\.\\w+)");
             Matcher matcher = pattern.matcher(lines.get(i));
             if (matcher.matches()) {
                 result = matcher.group(3) + " " + matcher.group(2) + " (email: " + matcher.group(4) + ")";
@@ -32,6 +32,30 @@ public class Converting {
             convertingLines.add(result);
         }
         printLines(convertingLines);
+        System.out.println("===============");
+    }
+
+    public static void convert3(List<UserInfo> userInfos) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (UserInfo userInfo : userInfos) {
+            if (!map.containsKey(userInfo.getDomainName())) {
+                map.put(userInfo.getDomainName(), new ArrayList<>());
+            }
+            map.get(userInfo.getDomainName()).add(userInfo.getSurmame());
+        }
+
+        for (Map.Entry<String, List<String>> mapEntry : map.entrySet()) {
+            System.out.println(mapEntry.getKey() + "==>" + listToString(mapEntry.getValue()));
+        }
+        System.out.println("===============");
+    }
+
+//    ("(?Ui)(\\w+);((\\w) ?(\\w+)?);(\\w+)?(\\w+@\\w+\\.\\w+)?")
+
+    public static void convert4(List<String> lines) {
+//        Random r = new Random();
+//        int n = (1000 + r.nextInt() * 9000);
+
     }
 
     private static void printLines(List<String> lines) {
@@ -40,42 +64,17 @@ public class Converting {
         }
     }
 
-    public static void convert3(List<UserInfo> userInfos) {
-        for (UserInfo userInfo : userInfos) {
-            if (userInfo.getUserInfoMap().containsKey("mail.ru")) {
-                String string = userInfo.getUserInfoMap().get("mail.ru").toString();
-                Pattern pattern = Pattern.compile("(\\w+)@(\\w+\\.\\w+)");
-                Matcher matcher = pattern.matcher(string);
-                if (matcher.matches()) {
-                    System.out.println(matcher.group(2) + "==>" + userInfo.getSurmame());
-                }
-            }
-            if (userInfo.getUserInfoMap().containsKey("google.com")) {
-                String string1 = userInfo.getUserInfoMap().get("google.com").toString();
-                Pattern pattern1 = Pattern.compile("(\\w+)@(\\w+\\.\\w+)");
-                Matcher matcher1 = pattern1.matcher(string1);
-                if (matcher1.matches()) {
-                    System.out.println(matcher1.group(2) + "==>" + userInfo.getSurmame());
-                }
-            }
-        }
-    }
-}
+    private static String listToString(List<String> list) {
+        StringBuilder buffer = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+             buffer.append(list.get(i));
+             if (i < list.size() - 1) {
+                 buffer.append(",");
+             }
 
-//    public static void convert4(List<String> lines) {
-//        List<String> convertingLines = new ArrayList<>();
-//        int counter = lines.size();
-//        String result = "";
-//        for (int i = 0; i < counter; i++) {
-//            Pattern pattern = Pattern.compile("([\\wа-яА-Я]+);(([\\wа-яА-Я]+) ?([\\wа-яА-Я]+)?);([\\wа-яА-Я]+)?(\\w+@\\w+\\.\\w+)?");
-//            Matcher matcher = pattern.matcher(lines.get(i));
-//            if (matcher.matches()) {
-//                result = matcher.group(1) + ";" + matcher.group(2) + matcher.group(3) + matcher.group(4) + ")";
-//            }
-//            convertingLines.add(result);
-//        }
-//        for (String convertingLine : convertingLines) {
-//            System.out.println(convertingLine);
-//        }
-//    }
+        }
+        return buffer.toString();
+    }
+
+}
 
