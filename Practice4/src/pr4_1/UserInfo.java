@@ -1,24 +1,22 @@
 package pr4_1;
 
-import java.util.HashMap;
-
 public class UserInfo {
-    private int userInfo;
     private String surmame;
-    private HashMap userInfoMap;
+    private String domainName;
+    private String email;
 
-
-    public UserInfo(String surmame, HashMap userInfoMap) {
+    public UserInfo(String surmame, String domainName, String email) {
         this.surmame = surmame;
-        this.userInfoMap = userInfoMap;
+        this.domainName = domainName;
+        this.email = email;
     }
 
-    public int getUserInfo() {
-        return userInfo;
+    public String getDomainName() {
+        return domainName;
     }
 
-    public void setUserInfo(int userInfo) {
-        this.userInfo = userInfo;
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
     }
 
     public String getSurmame() {
@@ -29,11 +27,11 @@ public class UserInfo {
         this.surmame = surmame;
     }
 
-    public HashMap getUserInfoMap() {
-        return userInfoMap;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserInfoMap(HashMap userInfoMap) {
-        this.userInfoMap = userInfoMap;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

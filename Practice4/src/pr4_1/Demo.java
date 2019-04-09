@@ -12,12 +12,14 @@ import java.util.regex.Pattern;
 
 public class Demo {
     private final static String FILE_NAME = "src/part1.txt";
+    private final static String FILE_NAME2 = "src/part2.txt";
 
     public static void main(String[] args) {
         Converting.convert1(readFile(FILE_NAME));
         Converting.convert2(readFile(FILE_NAME));
         Converting.convert3(readFileMakeUserInfo(FILE_NAME));
-//        Converting.convert4(readFile(FILE_NAME));
+        Converting.convert4(readFile(FILE_NAME));
+        Converting.convert5(readFile(FILE_NAME2));
     }
 
     private static List<String> readFile(String fileName) {
@@ -40,7 +42,7 @@ public class Demo {
                     Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
             for (int i = 0; i < lines.size(); i++) {
 
-//                ("(?Uui)(\\w+(\\s|;|@|\\.)?){6}")
+//                ("(?Ui)(\\w+(\\s|;|@|\\.)?){6}")
                 Pattern pattern = Pattern.compile("(?Ui)(\\w+);(\\w+) (\\w+);(\\w+)@(\\w+\\.\\w+)");
                 Matcher matcher = pattern.matcher(lines.get(i));
                 if (matcher.matches()) {
