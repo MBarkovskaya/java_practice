@@ -78,14 +78,13 @@ public class Converting {
         Integer wordLength;
         for (int i = 0; i < lines.size(); i++) {
             String[] array = lines.get(i).split("( )|(')|(,)|-");
-            System.out.println(array[0]);
             for (String word : array) {
                 wordLength = word.length();
                 if (wordLength != 0) {
                     if (!map.containsKey(wordLength)) {
                         map.put(wordLength, new HashSet<String>());
                     }
-                    map.get (wordLength).add(word);
+                    map.get(wordLength).add(word);
                 }
 
             }
