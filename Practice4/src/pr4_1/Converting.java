@@ -77,7 +77,7 @@ public class Converting {
         TreeMap<Integer, HashSet<String>> map = new TreeMap<>();
         Integer wordLength;
         for (int i = 0; i < lines.size(); i++) {
-            String[] array = lines.get(i).split("( )|(')|(,)|-");
+            String[] array = lines.get(i).split("[ ]|[']|[,]|-");
             for (String word : array) {
                 wordLength = word.length();
                 if (wordLength != 0) {
