@@ -49,15 +49,19 @@ public class Taxi {
             taxiKinds[2] = counts[2];
             taxiTotal += counts[2];
 
-            taxiKinds[1] = counts[1];
-            taxiTotal += counts[1];
         } else { // есть единички
-            if (counts[1] > 0) {
+            if (counts[1] > 0 && counts[0] > 1) {
                 taxiTotal++;
                 counts[0] -= 2;
                 taxiKinds[3]++;
+            }else if (counts[1] > 0 && counts[0] == 1) {
+                taxiTotal++;
+                counts[0] -= 1;
+                taxiKinds[2]++;
+            }else if (counts[1] > 0 && counts[0] == 0) {
+                taxiKinds[1] = counts[1];
+                taxiTotal += counts[1];
             }
-
             int ones = counts[0] / 4;
             taxiTotal += ones;
             taxiKinds[3] += ones;

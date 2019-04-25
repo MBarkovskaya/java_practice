@@ -20,7 +20,7 @@ public class Conversion {
     }
 
     public void convertingToFile() throws IOException {
-        Path path = Paths.get("/hdd/Projects_Mariya/study/java_practice/Practice6/src/text.txt");
+        Path path = Paths.get("text.txt");
 
         Stream<String> lines = Files.lines(path);
         String data = lines.collect(Collectors.joining("\n"));
@@ -32,7 +32,7 @@ public class Conversion {
             matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
         }
         matcher.appendTail(sb);
-        Files.write(Paths.get("/hdd/Projects_Mariya/study/java_practice/Practice6/src/textconv.txt"), sb.toString().getBytes());
+        Files.write(Paths.get("textconv.txt"), sb.toString().getBytes());
 
     }
 }
