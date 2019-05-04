@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Example4 {
+public class Example5 {
     public static void main(String[] args) throws IOException {
-        Example4 example4 = new Example4();
-        String[][] arrStr = example4.getArrayFromFileInput();
+        Example5 example5 = new Example5();
+        String[][] arrStr = example5.getArrayFromFileInput();
 
 //        FileOutputStream file = new FileOutputStream("filewithmatrixout.txt");
 //        try (DataOutputStream data = new DataOutputStream(file)) {
