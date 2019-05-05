@@ -5,6 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Converting {
+    /*any notices
+
+     */
 
     public static void convert1(List<String> lines) {
         List<String> convertingLines = new ArrayList<>();
@@ -17,6 +20,7 @@ public class Converting {
             }
             convertingLines.add(result);
         }
+        //printLines
         printLines(convertingLines);
         System.out.println("===============");
     }
@@ -101,17 +105,17 @@ public class Converting {
     }
 
     private static String listToString(List<String> list) {
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
-            buffer.append(list.get(i));
+            builder.append(list.get(i));
             if (i < list.size() - 1) {
-                buffer.append(",");
+                builder.append(",");
             }
 
         }
-        return buffer.toString();
+        return builder.toString();
     }
-
+//any notices
 }
 
 

@@ -1,4 +1,7 @@
 package pr4_1;
+/*
+any notices
+ */
 
 public class UserInfo {
     private String surmame;
@@ -18,7 +21,7 @@ public class UserInfo {
     public void setDomainName(String domainName) {
         this.domainName = domainName;
     }
-
+//any notices
     public String getSurmame() {
         return surmame;
     }
@@ -26,7 +29,7 @@ public class UserInfo {
     public void setSurmame(String surmame) {
         this.surmame = surmame;
     }
-
+    //any notices
     public String getEmail() {
         return email;
     }

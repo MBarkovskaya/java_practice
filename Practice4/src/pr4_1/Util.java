@@ -6,6 +6,9 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Scanner;
 
+/*
+any notices
+ */
 public class Util {
     public static String getInput(String fileName) {
         String lineSeparator = System.lineSeparator();
@@ -22,6 +25,7 @@ public class Util {
         }
         return sb.toString();
     }
+    //any notices
 
     public static void main(String[] args) throws Exception {
         Map<String, Charset> map = Charset.availableCharsets();
