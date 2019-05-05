@@ -1,6 +1,5 @@
 package practiseinputoutput;
 
-
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -9,25 +8,13 @@ import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Example1 {
-
+public class Example3 {
     public static void main(String[] args) throws IOException {
-        Example1 example = new Example1();
-        example.readAndChangePublicToPrivate("converting", "Converting.java");
-        example.readAndChangePublicToPrivate("demo", "Demo.java");
-        example.readAndChangePublicToPrivate("userinfo", "UserInfo.java");
-        example.readAndChangePublicToPrivate("util", "Util.java");
+        Example3 example = new Example3();
+        example.readAndDeleteComments("converting", "Converting.java");
+        example.readAndDeleteComments("userinfo", "UserInfo.java");
+        example.readAndDeleteComments("util", "Util.java");
     }
-//    public void convertingInputStreamToFile()
-//            throws IOException {
-//        InputStream initialStream = new FileInputStream(
-//                new File(Settings.getInstance().value("demo")));
-//        byte[] buffer = new byte[initialStream.available()];
-//        initialStream.read(buffer);
-//        File targetFile = new File(String.format("%s%s",
-//                this.getClass().getResource("/").getPath(), "Demo.java"));
-//        Files.write(buffer, targetFile);
-//    }
 
     private Path convertingInputStreamToFile(String fileProperty, String fileName)
             throws IOException {
@@ -38,10 +25,9 @@ public class Example1 {
         return targetFile.toPath();
     }
 
-    private void readAndChangePublicToPrivate(String fileProperty, String fileName) throws IOException {
+    private void readAndDeleteComments(String fileProperty, String fileName) throws IOException {
 
         Path targetFile = this.convertingInputStreamToFile(fileProperty, fileName);
-
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = Files.newBufferedReader(targetFile)) {
 
@@ -55,11 +41,11 @@ public class Example1 {
             System.err.format("IOException: %s%n", e);
         }
 
-        Pattern pattern = Pattern.compile("(?mi)^(\\s*private)");
+        Pattern pattern = Pattern.compile("//.*|(\"(?:\\\\[^\"]|\\\\\"|.)*?\")|(?s)/\\*.*?\\*/");
         Matcher matcher = pattern.matcher(sb.toString());
         StringBuffer sbuffer = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sbuffer, "public");
+            matcher.appendReplacement(sbuffer, "");
         }
         StringBuffer buffer = matcher.appendTail(sbuffer);
 
@@ -70,5 +56,4 @@ public class Example1 {
         outStream.flush();
         outStream.close();
     }
-
 }
