@@ -1,49 +1,49 @@
 package practiseinputoutput;
 
-
-import org.apache.commons.io.FileUtils;
+import com.google.common.io.Files;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Example1 {
-
-    public static void main(String[] args) throws IOException {
+public class Ex {
+    public static void main(String[] args) {
         Example1 example = new Example1();
-        example.readAndChangePublicToPrivate("converting", "Converting.java");
-        example.readAndChangePublicToPrivate("demo", "Demo.java");
-        example.readAndChangePublicToPrivate("userinfo", "UserInfo.java");
-        example.readAndChangePublicToPrivate("util", "Util.java");
+        try {
+            example.readAndChangePublicToPrivate("converting", "Converting.java");
+            example.readAndChangePublicToPrivate("demo", "Demo.java");
+            example.readAndChangePublicToPrivate("userinfo", "UserInfo.java");
+            example.readAndChangePublicToPrivate("util", "Util.java");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-//    public void convertingInputStreamToFile()
-//            throws IOException {
-//        InputStream initialStream = new FileInputStream(
-//                new File(Settings.getInstance().value("demo")));
-//        byte[] buffer = new byte[initialStream.available()];
-//        initialStream.read(buffer);
-//        File targetFile = new File(String.format("%s%s",
-//                this.getClass().getResource("/").getPath(), "Demo.java"));
-//        Files.write(buffer, targetFile);
-//    }
-
-    private Path convertingInputStreamToFile(String fileProperty, String fileName)
-            throws IOException {
-        InputStream initialStream = FileUtils.openInputStream
-                (new File(Settings.getInstance().value(fileProperty)));
+    public Path convertingInputStreamToFile(String fileProperty, String fileName) throws IOException {
+        InputStream initialStream = new FileInputStream(
+                new File(Settings.getInstance().value(fileProperty)));
+        byte[] buffer = new byte[initialStream.available()];
+        initialStream.read(buffer);
         File targetFile = new File(String.format("%s%s", "/tmp/", fileName));
-        FileUtils.copyInputStreamToFile(initialStream, targetFile);
+        Files.write(buffer, targetFile);
         return targetFile.toPath();
     }
+
+//    private Path convertingInputStreamToFile(String fileProperty, String fileName)
+//            throws IOException {
+//        InputStream initialStream = FileUtils.openInputStream
+//                (new File(Settings.getInstance().value(fileProperty)));
+//        File targetFile = new File(String.format("%s%s", "/tmp/", fileName));
+//        FileUtils.copyInputStreamToFile(initialStream, targetFile);
+//        return targetFile.toPath();
+//    }
 
     public void readAndChangePublicToPrivate(String fileProperty, String fileName) throws IOException {
 
         Path targetFile = this.convertingInputStreamToFile(fileProperty, fileName);
 
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader br = Files.newBufferedReader(targetFile)) {
+        try (BufferedReader br = java.nio.file.Files.newBufferedReader(targetFile)) {
 
             // read line by line
             String line;
@@ -70,5 +70,4 @@ public class Example1 {
         outStream.flush();
         outStream.close();
     }
-
 }
